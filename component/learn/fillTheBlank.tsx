@@ -13,7 +13,7 @@ export default function FillBlank (props: IFillBlankProps) {
   const [isComplete, setIsComplete] = useState(false);
   const keyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     // console.log(event.code);
-    alert(event.code);
+    alert(event.charCode);
     if (event.code === "Delete" || event.code === "Backspace") {
       event.preventDefault();
       if(currentInputIndex === 0){
