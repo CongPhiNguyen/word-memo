@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
+import { FiDelete } from "react-icons/fi";
 export interface IFillBlankProps {
   word: string,
   meaning: string
@@ -11,27 +12,25 @@ export default function FillBlank (props: IFillBlankProps) {
   const inputRef = props.word.split('').map((val) =>useRef(null));
   const [currentInputIndex, setCurrentInputIndex] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const deleteChar = () => {
+    if(currentInputIndex === 0){
+      (inputRef[currentInputIndex].current as unknown as HTMLInputElement).value = '';
+      return;
+    }   
+    else {
+      // console.log("currentInputIndex", currentInputIndex);
+      (inputRef[currentInputIndex].current as unknown as HTMLInputElement).value = '';
+      (inputRef[currentInputIndex -1].current as unknown as HTMLInputElement).focus();
+      setCurrentInputIndex(currentInputIndex-1);
+      if(currentInputIndex === props.word.length - 1){
+        setIsComplete(false);
+      }
+    }
+  }
   const keyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    // console.log(event.code);
-    alert(event.toString());
     if (event.code === "Delete" || event.code === "Backspace") {
       event.preventDefault();
-      if(currentInputIndex === 0){
-        (inputRef[currentInputIndex].current as unknown as HTMLInputElement).value = '';
-        return;
-      }   
-      else {
-        console.log("currentInputIndex", currentInputIndex);
-        (inputRef[currentInputIndex].current as unknown as HTMLInputElement).value = '';
-        // console.log((inputRef[currentInputIndex - 1].current as unknown as HTMLInputElement));
-        // (inputRef[currentInputIndex].current as unknown as HTMLInputElement).blur();
-        (inputRef[currentInputIndex -1].current as unknown as HTMLInputElement).focus();
-        setCurrentInputIndex(currentInputIndex-1);
-        // (inputRef[currentInputIndex].current as unknown as HTMLInputElement).focus();
-        if(currentInputIndex === props.word.length - 1){
-          setIsComplete(false);
-        }
-      }
+      deleteChar();
     }
   };
   return (
@@ -44,9 +43,14 @@ export default function FillBlank (props: IFillBlankProps) {
       <label className='word uppercase text-[#404bdf] font-[700] text-[28px]'>
         {props.meaning}
       </label>
-      <div className="word-container flex justify-center">
-        <div className="border-[3px] border-[#7c83df] mt-[14px] pb-[24px] pt-[12px] flex hover:opacity-70"
-          onClick={() => {
+      <div className="word-container flex justify-center relative">
+        <div className="border-[3px] border-[#7c83df] mt-[14px] pb-[24px] pt-[12px] flex hover:opacity-70 justify-self-center relative"
+          onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+            console.log("event.target", event.target);
+            const attributes: any = (event.target as HTMLElement).attributes;
+            if(attributes.hasOwnProperty('stroke')){
+              return;
+            }
             for(let i = 0; i < inputRef.length; i++){
               if((inputRef[i].current as unknown as HTMLInputElement).value.length == 0) {
                 (inputRef[i].current as unknown as HTMLInputElement).focus();
@@ -82,8 +86,21 @@ export default function FillBlank (props: IFillBlankProps) {
               })
             }
           </div>
+          <div
+            className="block sxm:hidden top-[25%] right-[-42px] absolute hover:text-[#2b37e2] hover:opacity-100"
+            key='delete-button'
+            onClick={() => {
+              deleteChar();
+            }}
+          >
+            <FiDelete key='delete-button' color={"#404bdf"}
+              size={32}
+            />
+          </div>
         </div>
+        
       </div>
+      
       <button 
         className={
           isComplete 

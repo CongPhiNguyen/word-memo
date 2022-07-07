@@ -8,6 +8,9 @@ module.exports = {
     ],  
     theme: {
       extend: {},
+      screens: {
+        'sxm': '500px'
+      }
     },
     plugins: [],
 }
