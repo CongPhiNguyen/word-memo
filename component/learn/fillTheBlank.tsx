@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { FiDelete } from "react-icons/fi";
+import { API } from '../../config/api';
 export interface IFillBlankProps {
   word: {
     word: string,
@@ -41,9 +42,9 @@ export default function FillBlank (props: IFillBlankProps) {
     }
   };
   useEffect(() => {
-    axios.get("http://localhost:3001/api/test")
+    axios.get(API.route+"api/test")
     .then(data => {
-      console.log("data", data);
+      console.log("data.data.words", data.data.words);
     })
     .catch(error => {
       console.log(error);
