@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { FiDelete } from "react-icons/fi";
@@ -39,6 +40,15 @@ export default function FillBlank (props: IFillBlankProps) {
       deleteChar();
     }
   };
+  useEffect(() => {
+    axios.get("http://localhost:3001/api/test")
+    .then(data => {
+      console.log("data", data);
+    })
+    .catch(error => {
+      console.log(error);
+    }) 
+  })
   return (
     <div className='text-center'
       onKeyDown={keyDownHandler}
@@ -153,6 +163,7 @@ export default function FillBlank (props: IFillBlankProps) {
         <button 
           className="next check-button bg-[#7c83df] text-[#fff] px-[12px] py-1 mt-[24px] hover:opacity-70 rounded-[4px] w-[60%]"
           onClick={() => {
+            setCurrentInputIndex(0);
             setIsComplete(false);
             setIsFinishCheck(false);
             setIsTrueCheck(false);
