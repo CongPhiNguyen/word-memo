@@ -22,7 +22,7 @@ export default function Header (props: IHeaderProps) {
                 </img>
               </a>
             </Link>
-            <Link href="/">
+            {/* <Link href="/">
               <a className={
                   props.active==='home' ? 
                     'px-[16px] py-[14px] text-[#fff] font-[700]':
@@ -30,6 +30,16 @@ export default function Header (props: IHeaderProps) {
                 }
                 >
                 Trang chủ
+              </a>
+            </Link> */}
+            <Link href="/word-list">
+              <a className={
+                  props.active==='word-list' ? 
+                    'px-[16px] py-[14px] text-[#fff] font-[700]':
+                    'px-[16px] py-[14px] text-[#fff]'
+                }
+                >
+                WordList
               </a>
             </Link>
             <Link href="/learn">
@@ -49,7 +59,7 @@ export default function Header (props: IHeaderProps) {
                     'px-[16px] py-[14px] text-[#fff]'
                 }
                 >
-                Thêm từ mới
+                Add new word
               </a>
             </Link>
           </div>
