@@ -2,5 +2,5 @@ interface IAPI {
   route: string,
 }
 export const API : IAPI = {
-  route: "http://localhost:3001/"
+  route: "https://word-memo-backend.vercel.app/"
 }
